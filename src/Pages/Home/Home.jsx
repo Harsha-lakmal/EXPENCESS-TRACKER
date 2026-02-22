@@ -8,7 +8,7 @@ function AddExpense() {
   const [image, setImage] = useState(null);
 
   // Backend එකේ IP එක මෙතනට දාන්න
-  const API_URL = 'http://ඔයාගේ-AWS-IP-එක:3000';
+  const API_URL = 'http://13.200.40.97-එක:3000';
 
   const handleUpload = async (e) => {
     e.preventDefault();
