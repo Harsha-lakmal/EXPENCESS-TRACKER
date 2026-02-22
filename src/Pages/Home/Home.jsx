@@ -7,53 +7,77 @@ function AddExpense() {
   const [amount, setAmount] = useState('');
   const [image, setImage] = useState(null);
 
-  // Backend එකේ IP එක මෙතනට දාන්න
-  const API_URL = 'http://13.200.40.97-එක:3000';
+  const API_URL = 'http://13.200.40.97:3000';
 
   const handleUpload = async (e) => {
     e.preventDefault();
 
-    // Multipart form data යවන්න FormData object එකක් අවශ්‍යයි
     const formData = new FormData();
-    formData.append('user_id', 1); // දැනට 1 කියලා දෙමු
+    formData.append('user_id', 1);
     formData.append('date', date);
     formData.append('description', description);
     formData.append('amount', amount);
-    formData.append('image', image); // පින්තූරය
+    formData.append('image', image);
 
     try {
       await axios.post(`${API_URL}/api/expenses`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
+        headers: { 
+          'Content-Type': 'multipart/form-data' 
+        }
       });
-      alert("වියදම සාර්ථකව ඇතුළත් කළා! ✅");
-      // Form එක reset කරන්න
+
+      alert("Expense added successfully!");
+
+      setDate('');
+      setDescription('');
+      setAmount('');
+      setImage(null);
       e.target.reset();
     } catch (err) {
-      console.error(err);
-      alert("Error: දත්ත ඇතුළත් කිරීම අසාර්ථකයි!");
+      console.error("Upload error:", err);
+      alert("Error: Failed to add data!");
     }
   };
 
   return (
     <div style={styles.container}>
-      <h2 style={{ textAlign: 'center' }}>Add Your Expense 💸</h2>
+      <h2 style={styles.title}>Add New Expense</h2>
       <form onSubmit={handleUpload} style={styles.form}>
-        <label>දිනය (Date):</label>
-        <input type="date" required onChange={(e) => setDate(e.target.value)} style={styles.input} />
-
-        <label>විස්තරය (Description):</label>
-        <textarea 
-          placeholder="මොකක් සඳහාද වියදම් වුණේ?" 
+        <label style={styles.label}>Date:</label>
+        <input 
+          type="date" 
           required 
+          value={date}
+          onChange={(e) => setDate(e.target.value)} 
+          style={styles.input} 
+        />
+
+        <label style={styles.label}>Description:</label>
+        <textarea 
+          placeholder="Enter description" 
+          required 
+          value={description}
           onChange={(e) => setDescription(e.target.value)} 
           style={styles.input} 
         />
 
-        <label>මුදල (Amount - Rs):</label>
-        <input type="number" required placeholder="0.00" onChange={(e) => setAmount(e.target.value)} style={styles.input} />
+        <label style={styles.label}>Amount (Rs):</label>
+        <input 
+          type="number" 
+          required 
+          placeholder="0.00" 
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)} 
+          style={styles.input} 
+        />
 
-        <label>බිල්පතේ පින්තූරය (Bill Image):</label>
-        <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} style={styles.input} />
+        <label style={styles.label}>Receipt Image:</label>
+        <input 
+          type="file" 
+          accept="image/*" 
+          onChange={(e) => setImage(e.target.files[0])} 
+          style={styles.input} 
+        />
 
         <button type="submit" style={styles.button}>Save Expense</button>
       </form>
@@ -62,10 +86,47 @@ function AddExpense() {
 }
 
 const styles = {
-  container: { maxWidth: '500px', margin: '50px auto', padding: '20px', border: '1px solid #ddd', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' },
-  form: { display: 'flex', flexDirection: 'column' },
-  input: { padding: '10px', margin: '10px 0', borderRadius: '5px', border: '1px solid #ccc' },
-  button: { padding: '12px', background: '#28a745', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', fontWeight: 'bold' }
+  container: { 
+    maxWidth: '500px', 
+    margin: '40px auto', 
+    padding: '25px', 
+    border: '1px solid #eee', 
+    borderRadius: '12px', 
+    boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
+    backgroundColor: '#fff'
+  },
+  title: { 
+    textAlign: 'center', 
+    color: '#333',
+    marginBottom: '20px'
+  },
+  form: { 
+    display: 'flex', 
+    flexDirection: 'column' 
+  },
+  label: {
+    fontWeight: 'bold',
+    marginBottom: '5px',
+    color: '#555'
+  },
+  input: { 
+    padding: '12px', 
+    margin: '0 0 20px 0', 
+    borderRadius: '6px', 
+    border: '1px solid #ddd',
+    fontSize: '14px'
+  },
+  button: { 
+    padding: '14px', 
+    background: '#28a745', 
+    color: '#fff', 
+    border: 'none', 
+    borderRadius: '6px', 
+    cursor: 'pointer', 
+    fontSize: '16px',
+    fontWeight: '600',
+    transition: 'background 0.3s'
+  }
 };
 
 export default AddExpense;
