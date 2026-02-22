@@ -1,0 +1,37 @@
+name: Deploy Frontend to AWS
+
+on:
+  push:
+    branches:
+      - main  # main branch එකට push කරන විට මෙය ක්‍රියාත්මක වේ
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies and Build
+        run: |
+          npm install
+          npm run build
+
+      - name: Deploy to Server via SSH
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "dist/*"   # Vite නම් dist, සාමාන්‍ය React නම් build ලෙස වෙනස් කරන්න
+          target: "/var/www/html"
+          strip_components: 1 # dist ෆෝල්ඩරය නැතුව එහි ඇතුළත ෆයිල් පමණක් කොපි කිරීමට
+
+      - name: Restart Nginx (Optional but good)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: sudo systemctl restart nginx
