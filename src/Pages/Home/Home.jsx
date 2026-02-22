@@ -7,7 +7,7 @@ function AddExpense() {
   const [amount, setAmount] = useState('');
   const [image, setImage] = useState(null);
 
-  const API_URL = 'http://13.200.40.97:3000';
+  const API_URL = 'https://expenses-application.kavishka.me';
 
   const handleUpload = async (e) => {
     e.preventDefault();
