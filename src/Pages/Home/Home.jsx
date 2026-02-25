@@ -20,10 +20,11 @@ function AddExpense() {
     formData.append('image', image);
 
     try {
-      //await axios.post(`${API_URL}/api/expenses`, formData);
-      await axios.post(`${API_URL}/api/expenses`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
+      const response = await axios.post(`${API_URL}/api/expenses/expenses`, formData); //single s
+     // const response = await axios.post(`${API_URL}/api/expenses/expensess`, formData); double ss
+      // await axios.post(`${API_URL}/api/expenses`, formData, {
+      //   headers: { 'Content-Type': 'multipart/form-data' }
+      // });
       alert("Expense added successfully!");
       setDate('');
       setDescription('');
@@ -32,7 +33,7 @@ function AddExpense() {
       e.target.reset();
     } catch (err) {
       console.error("Upload error:", err);
-      alert("Error: Failed to add data!");
+      alert("Error:  Failed to add data!");
     }
   };
 

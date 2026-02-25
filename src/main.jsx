@@ -5,7 +5,7 @@ import './index.css'
 import Home from './Pages/Home/Home.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+   
     <Home />
-  </StrictMode>,
+   
 )
