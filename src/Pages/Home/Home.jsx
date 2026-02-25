@@ -83,4 +83,8 @@ function AddExpense() {
   );
 }
 
+function viwe_all_expencess (){
+
+}
+
 export default AddExpense;
