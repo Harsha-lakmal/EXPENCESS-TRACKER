@@ -1,50 +1,277 @@
-.add-expense-container {
-  max-width: 500px;
-  margin: 40px auto;
-  padding: 25px;
-  border: 1px solid #eee;
+/* ═══════════════════════════════════════════════════
+   AddExpense.css — Expense Tracker Styles
+   ═══════════════════════════════════════════════════ */
+
+/* ── Page Layout ── */
+.expense-page {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  padding: 28px;
+  min-height: 100vh;
+  background: #1a1a1a;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+/* ══════════════════════════════════
+   FORM SIDE
+   ══════════════════════════════════ */
+.expense-form-box {
+  background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+  padding: 28px 24px;
+  width: 280px;
+  min-width: 260px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.18);
+  flex-shrink: 0;
 }
 
-.add-expense-title {
+.expense-form-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 16px;
   text-align: center;
-  color: #333;
-  margin-bottom: 20px;
 }
 
-.add-expense-form {
+.expense-form {
   display: flex;
   flex-direction: column;
+  gap: 5px;
 }
 
-.add-expense-label {
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #555;
+.expense-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #222;
+  margin-top: 6px;
 }
 
-.add-expense-input {
-  padding: 12px;
-  margin: 0 0 20px 0;
+.expense-input,
+.expense-textarea {
+  padding: 9px 12px;
+  border: 1px solid #ccc;
   border-radius: 6px;
-  border: 1px solid #ddd;
-  font-size: 14px;
+  font-size: 0.88rem;
+  background: #2d2d2d;
+  color: #e8e8e8;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: border-color 0.2s;
 }
 
-.add-expense-button {
-  padding: 14px;
-  background: #28a745;
+.expense-input:focus,
+.expense-textarea:focus {
+  border-color: #22c55e;
+}
+
+.expense-textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+/* ── Buttons ── */
+.expense-btn {
+  margin-top: 10px;
+  padding: 12px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.93rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-family: inherit;
+  transition: filter 0.2s;
+}
+
+.expense-btn:hover {
+  filter: brightness(0.9);
+}
+
+.expense-btn-save {
+  background: #22c55e;
+}
+
+.expense-btn-update {
+  background: #16a34a;
+}
+
+.expense-btn-delete {
+  background: #ef4444;
+}
+
+/* ── Selected notice banner ── */
+.expense-selected-notice {
+  background: #fef9c3;
+  border: 1px solid #fde047;
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 0.78rem;
+  color: #713f12;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expense-clear-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #713f12;
+  font-weight: 700;
+  font-size: 0.85rem;
+  font-family: inherit;
+}
+
+/* ══════════════════════════════════
+   TABLE SIDE
+   ══════════════════════════════════ */
+.expense-table-box {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.18);
+  min-width: 0;
+}
+
+.expense-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.expense-refresh-btn {
+  background: #22c55e;
   color: #fff;
   border: none;
   border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
+  padding: 7px 14px;
   font-weight: 600;
-  transition: background 0.3s;
+  font-size: 0.83rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s;
 }
 
-.add-expense-button:hover {
-  background: #218838;
+.expense-refresh-btn:hover {
+  background: #16a34a;
+}
+
+.expense-table-scroll {
+  overflow-x: auto;
+}
+
+.expense-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.expense-table th {
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 2px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.expense-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #374151;
+  vertical-align: middle;
+}
+
+/* Clickable rows */
+.expense-table tbody tr {
+  cursor: pointer;
+  transition: background 0.15s;
+  border-left: 3px solid transparent;
+}
+
+.expense-table tbody tr:hover {
+  background: #f0fdf4;
+}
+
+/* Selected row */
+.expense-row-selected {
+  background: #dcfce7 !important;
+  border-left: 3px solid #22c55e !important;
+}
+
+.expense-row-selected td {
+  color: #15803d;
+  font-weight: 600;
+}
+
+/* Truncate long descriptions */
+.expense-td-desc {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Amount column */
+.expense-td-amount {
+  font-weight: 600;
+  color: #15803d;
+}
+
+/* Receipt link */
+.expense-receipt-link {
+  color: #22c55e;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.expense-receipt-link:hover {
+  text-decoration: underline;
+}
+
+.expense-no-receipt {
+  color: #d1d5db;
+}
+
+/* Total */
+.expense-table-total {
+  text-align: right;
+  margin-top: 14px;
+  font-weight: 700;
+  color: #15803d;
+  font-size: 0.95rem;
+  padding-top: 10px;
+  border-top: 2px solid #e5e7eb;
+}
+
+/* Empty / Loading */
+.expense-empty {
+  text-align: center;
+  color: #9ca3af;
+  padding: 2rem 0;
+  font-size: 0.9rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .expense-page {
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .expense-form-box {
+    width: 100%;
+  }
 }
